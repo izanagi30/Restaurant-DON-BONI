@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Restaurante DON-BONI - Platos Típicos</title>
-    <!-- Cargamos la librería oficial de la pasarela (Stripe en este caso) -->
-    <script src="https://js.stripe.com/v3/"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -33,7 +31,7 @@
             </div>
         </section>
 
-        <!-- Sección del Carrito y Pago -->
+        <!-- Sección del Carrito -->
         <section id="carrito-seccion">
             <h2>Tu Pedido</h2>
             <ul id="lista-carrito">
@@ -41,12 +39,9 @@
             </ul>
             <p><strong>Total: S/. <span id="total-precio">0.00</span></strong></p>
             
-            <!-- Formulario donde Stripe dibujará el campo de la tarjeta de forma segura -->
+            <!-- Formulario simplificado para proceder al pago -->
             <form id="formulario-pago" style="display:none;">
-                <h3>Datos de Pago</h3>
-                <div id="elemento-tarjeta"></div>
                 <button id="boton-pagar" type="submit">Confirmar y Pagar</button>
-                <div id="mensaje-error" role="alert"></div>
             </form>
         </section>
     </main>
