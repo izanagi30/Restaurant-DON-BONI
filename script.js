@@ -127,7 +127,7 @@ if (formPago) {
         body.appendChild(contenedorConfirmacion);
     });
 }
-/* Corrección para que se vean los nuevos botones de cantidad */
+// Corrección para que se vean los nuevos botones de cantidad 
 .platillo {
     display: flex !important;
     flex-direction: column !important;
