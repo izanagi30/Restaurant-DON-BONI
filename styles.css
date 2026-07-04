@@ -221,3 +221,39 @@ button:hover {
     margin-top: 0.5rem;
     text-align: center;
 }
+// Corrección para que se vean los nuevos botones de cantidad 
+.platillo {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0.8rem !important;
+}
+
+.control-unidades {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 10px 0;
+    background: #eeeeee;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.control-unidades button {
+    background-color: var(--color-principal);
+    color: white;
+    padding: 2px 12px;
+    font-size: 1.1rem;
+    border-radius: 3px;
+}
+
+.control-unidades span {
+    font-size: 1.2rem !important;
+    font-weight: bold;
+    color: var(--texto-oscuro) !important;
+}
+
+.btn-agregar {
+    width: 100%;
+}
+
