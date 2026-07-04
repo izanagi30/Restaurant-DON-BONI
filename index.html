@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante DON-BONI - Platos Típicos</title>
+    <!-- Cargamos la librería oficial de la pasarela (Stripe en este caso) -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Restaurante DON-BONI</h1>
+        <p>Los mejores platos típicos del norte con entrega local</p>
+    </header>
+
+    <main>
+        <!-- Sección del Menú -->
+        <section id="menu">
+            <h2>Nuestro Menú</h2>
+            <div class="platillo">
+                <h3>Seco de Cabrito</h3>
+                <p>Delicioso cabrito tierno acompañado de frijoles y arroz.</p>
+                <span>S/. 35.00</span>
+                <button onclick="agregarAlCarrito('Seco de Cabrito', 35.00)">Agregar al Carrito</button>
+            </div>
+            <div class="platillo">
+                <h3>Ceviche Norteño</h3>
+                <p>Pescado fresco con su toque de ají limo y zarandaja.</p>
+                <span>S/. 30.00</span>
+                <button onclick="agregarAlCarrito('Ceviche Norteño', 30.00)">Agregar al Carrito</button>
+            </div>
+        </section>
+
+        <!-- Sección del Carrito y Pago -->
+        <section id="carrito-seccion">
+            <h2>Tu Pedido</h2>
+            <ul id="lista-carrito">
+                <!-- Los platillos agregados aparecerán aquí -->
+            </ul>
+            <p><strong>Total: S/. <span id="total-precio">0.00</span></strong></p>
+            
+            <!-- Formulario donde Stripe dibujará el campo de la tarjeta de forma segura -->
+            <form id="formulario-pago" style="display:none;">
+                <h3>Datos de Pago</h3>
+                <div id="elemento-tarjeta"></div>
+                <button id="boton-pagar" type="submit">Confirmar y Pagar</button>
+                <div id="mensaje-error" role="alert"></div>
+            </form>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
