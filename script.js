@@ -1,72 +1,84 @@
-// Inicializamos la pasarela con tu LLAVE PÚBLICA (es seguro mostrarla aquí)
-const stripe = Stripe('tu_llave_publica_aqui'); 
+// === LOGICA DEL CARRITO DE COMPRAS ===
+
 let carrito = [];
 let total = 0;
 
+// Función para agregar productos al carrito
 function agregarAlCarrito(nombre, precio) {
+    // Añadimos el producto al arreglo del carrito
     carrito.push({ nombre, precio });
+    // Sumamos el precio al total
     total += precio;
+    // Actualizamos lo que ve el usuario
     actualizarInterfaz();
 }
 
+// Función para actualizar la vista del carrito
 function actualizarInterfaz() {
     const lista = document.getElementById('lista-carrito');
+    const totalPrecioSpan = document.getElementById('total-precio');
+    const formularioPago = document.getElementById('formulario-pago');
+
+    // Limpiamos la lista actual
     lista.innerHTML = '';
     
+    // Recorremos el carrito y creamos los elementos de la lista
     carrito.forEach(item => {
         const li = document.createElement('li');
         li.textContent = `${item.nombre} - S/. ${item.precio.toFixed(2)}`;
         lista.appendChild(li);
     });
     
-    document.getElementById('total-precio').textContent = total.toFixed(2);
+    // Actualizamos el total a pagar
+    totalPrecioSpan.textContent = total.toFixed(2);
     
-    // Si hay artículos, mostramos el formulario de pago
+    // Mostramos u ocultamos la sección de pago según si hay productos
     if (carrito.length > 0) {
-        document.getElementById('formulario-pago').style.display = 'block';
-        inicializarFormularioPago();
+        formularioPago.style.display = 'block';
+    } else {
+        formularioPago.style.display = 'none';
     }
 }
 
-// Configurar los campos seguros de la tarjeta
-let elements;
-function inicializarFormularioPago() {
-    if (!elements) {
-        elements = stripe.elements();
-        const cardElement = elements.create('card');
-        cardElement.mount('#elemento-tarjeta');
-    }
-}
 
-// Procesar el pago al enviar el formulario
-document.getElementById('formulario-pago').addEventListener('submit', async (event) => {
+// === LOGICA DEL BOTON PAGAR (MODIFICADA) ===
+
+// Escuchamos el evento de 'submit' del formulario de pago
+document.getElementById('formulario-pago').addEventListener('submit', function(event) {
+    // Evitamos que la página se recargue por defecto
     event.preventDefault();
-    document.getElementById('boton-pagar').disabled = true;
 
-    // 1. LLAMADA CRUCIAL: Pedimos la intención de pago a nuestro Backend seguro
-    // (Por ejemplo, una función Serverless en Vercel o Supabase)
-    const respuestaBackend = await fetch('https://tu-api-segura.vercel.app/api/crear-pago', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ items: carrito, total_esperado: total })
-    });
-    
-    const { clientSecret } = await respuestaBackend.json();
+    // 1. Obtenemos referencias a los elementos principales de la página
+    const header = document.querySelector('header');
+    const main = document.querySelector('main');
+    const body = document.body;
 
-    // 2. Confirmamos el pago directamente con los servidores de la pasarela
-    const cardElement = elements.getElement('card');
-    const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: { card: cardElement }
-    });
+    // 2. Ocultamos la cabecera y el contenido principal (menú y carrito)
+    if (header) header.style.display = 'none';
+    if (main) main.style.display = 'none';
 
-    if (error) {
-        document.getElementById('mensaje-error').textContent = error.message;
-        document.getElementById('boton-pagar').disabled = false;
-    } else if (paymentIntent.status === 'succeeded') {
-        alert('¡Pago exitoso! Tu orden ha sido enviada a la cocina de DON-BONI.');
-        carrito = [];
-        total = 0;
-        actualizarInterfaz();
-        document.getElementById('formulario-pago').style.display = 'none';
-    }
+    // 3. Creamos un nuevo contenedor para mostrar la imagen y el mensaje
+    const contenedorConfirmacion = document.createElement('div');
+    contenedorConfirmacion.style.textAlign = 'center';
+    contenedorConfirmacion.style.padding = '50px';
+    contenedorConfirmacion.style.marginTop = '100px';
+
+    // 4. Creamos el elemento de imagen
+    const imagenConfirmacion = document.createElement('img');
+    // --- CAMBIA ESTA URL POR LA DE LA IMAGEN QUE QUIERAS MOSTRAR ---
+    imagenConfirmacion.src = 'https://i.imgur.com/gB3H34V.png'; 
+    // --------------------------------------------------------------
+    imagenConfirmacion.alt = 'Pedido Confirmado';
+    imagenConfirmacion.style.maxWidth = '300px'; // Ajusta el tamaño según necesites
+    imagenConfirmacion.style.marginBottom = '20px';
+
+    // 5. Creamos un mensaje de texto
+    const mensaje = document.createElement('h2');
+    mensaje.textContent = '¡Gracias por tu pedido! Tu orden ha sido recibida.';
+    mensaje.style.color = '#2C3E50'; // Usamos un color de tu estilo
+
+    // 6. Armamos la estructura y la añadimos al body de la página
+    contenedorConfirmacion.appendChild(imagenConfirmacion);
+    contenedorConfirmacion.appendChild(mensaje);
+    body.appendChild(contenedorConfirmacion);
 });
