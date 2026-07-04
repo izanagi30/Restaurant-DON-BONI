@@ -1,0 +1,223 @@
+/* ==========================================================================
+   1. VARIABLES DE DISEÑO (Colores del Restaurante)
+   ========================================================================== */
+:root {
+    --color-principal: #D35400;   /* Naranja terracota/brasa (Abre el apetito) */
+    --color-secundario: #2C3E50;  /* Azul oscuro elegante (Contraste) */
+    --color-fondo: #FAFAFA;       /* Blanco roto limpio */
+    --color-tarjeta: #FFFFFF;     /* Blanco puro para los platos */
+    --texto-oscuro: #1A1A1A;
+    --texto-claro: #7F8C8D;
+    --exito: #27AE60;             /* Verde para pagos exitosos */
+    --fuente-titulos: 'Playfair Display', Georgia, serif;
+    --fuente-cuerpo: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ==========================================================================
+   2. ESTILOS GENERALES
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fuente-cuerpo);
+    background-color: var(--color-fondo);
+    color: var(--texto-oscuro);
+    line-height: 1.6;
+}
+
+/* ==========================================================================
+   3. CABECERA (Header)
+   ========================================================================== */
+header {
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200') no-repeat center center/cover;
+    color: #ffffff;
+    text-align: center;
+    padding: 4rem 1rem;
+}
+
+header h1 {
+    font-family: var(--fuente-titulos);
+    font-size: 3rem;
+    letter-spacing: 2px;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    color: #F39C12; /* Dorado norteño */
+}
+
+header p {
+    font-size: 1.2rem;
+    font-weight: 300;
+}
+
+/* ==========================================================================
+   4. DISEÑO DE LA PÁGINA (Layout)
+   ========================================================================== */
+main {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* El menú toma más espacio que el carrito */
+    gap: 2rem;
+}
+
+@media (max-width: 768px) {
+    main {
+        grid-template-columns: 1fr; /* En celulares se ve uno abajo del otro */
+    }
+}
+
+h2 {
+    font-family: var(--fuente-titulos);
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 3px solid var(--color-principal);
+    color: var(--color-secundario);
+}
+
+/* ==========================================================================
+   5. TARJETAS DEL MENÚ (Platillos)
+   ========================================================================== */
+#menu {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.platillo {
+    background-color: var(--color-tarjeta);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.platillo:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+
+.platillo h3 {
+    font-size: 1.3rem;
+    color: var(--texto-oscuro);
+    margin-bottom: 0.3rem;
+}
+
+.platillo p {
+    color: var(--texto-claro);
+    font-size: 0.95rem;
+}
+
+.platillo span {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--color-principal);
+    display: block;
+    text-align: right;
+}
+
+/* Botones genéricos */
+button {
+    background-color: var(--color-principal);
+    color: white;
+    border: none;
+    padding: 0.7rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+button:hover {
+    background-color: #A04000;
+}
+
+.platillo button {
+    grid-column: 1 / -1; /* Ocupa todo el ancho abajo del texto */
+    justify-self: end;
+}
+
+/* ==========================================================================
+   6. CARRITO Y PASARELA DE PAGO
+   ========================================================================== */
+#carrito-seccion {
+    background-color: var(--color-tarjeta);
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    align-self: start;
+}
+
+#lista-carrito {
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+#lista-carrito li {
+    padding: 0.5rem 0;
+    border-bottom: 1px dashed #E0E0E0;
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+}
+
+#carrito-seccion p {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    text-align: right;
+}
+
+/* Formulario de Stripe / Pasarela */
+#formulario-pago {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #ECF0F1;
+}
+
+#formulario-pago h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+    color: var(--color-secundario);
+}
+
+/* Estilo para el contenedor seguro donde Stripe inyecta la tarjeta */
+#elemento-tarjeta {
+    background-color: #f8f9fa;
+    padding: 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+}
+
+#boton-pagar {
+    width: 100%;
+    background-color: var(--exito);
+    padding: 0.9rem;
+}
+
+#boton-pagar:hover {
+    background-color: #1E8449;
+}
+
+#boton-pagar:disabled {
+    background-color: #BDC3C7;
+    cursor: not-allowed;
+}
+
+#mensaje-error {
+    color: #C0392B;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    text-align: center;
+}
