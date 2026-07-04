@@ -17,17 +17,35 @@
         <!-- Sección del Menú -->
         <section id="menu">
             <h2>Nuestro Menú</h2>
-            <div class="platillo">
+            
+            <!-- Plato 1 -->
+            <div class="platillo" id="platillo-cabrito">
                 <h3>Seco de Cabrito</h3>
                 <p>Delicioso cabrito tierno acompañado de frijoles y arroz.</p>
                 <span>S/. 35.00</span>
-                <button onclick="agregarAlCarrito('Seco de Cabrito', 35.00)">Agregar al Carrito</button>
+                
+                <!-- Selector de Unidades en el Menú -->
+                <div class="control-unidades">
+                    <button type="button" onclick="cambiarUnidadesMenu('cabrito', -1)">-</button>
+                    <span id="cant-cabrito">1</span>
+                    <button type="button" onclick="cambiarUnidadesMenu('cabrito', 1)">+</button>
+                </div>
+                <button class="btn-agregar" onclick="agregarAlCarritoConCantidad('Seco de Cabrito', 35.00, 'cabrito')">Agregar al Carrito</button>
             </div>
-            <div class="platillo">
+
+            <!-- Plato 2 -->
+            <div class="platillo" id="platillo-ceviche">
                 <h3>Ceviche Norteño</h3>
                 <p>Pescado fresco con su toque de ají limo y zarandaja.</p>
                 <span>S/. 30.00</span>
-                <button onclick="agregarAlCarrito('Ceviche Norteño', 30.00)">Agregar al Carrito</button>
+                
+                <!-- Selector de Unidades en el Menú -->
+                <div class="control-unidades">
+                    <button type="button" onclick="cambiarUnidadesMenu('ceviche', -1)">-</button>
+                    <span id="cant-ceviche">1</span>
+                    <button type="button" onclick="cambiarUnidadesMenu('ceviche', 1)">+</button>
+                </div>
+                <button class="btn-agregar" onclick="agregarAlCarritoConCantidad('Ceviche Norteño', 30.00, 'ceviche')">Agregar al Carrito</button>
             </div>
         </section>
 
@@ -35,11 +53,10 @@
         <section id="carrito-seccion">
             <h2>Tu Pedido</h2>
             <ul id="lista-carrito">
-                <!-- Los platillos agregados aparecerán aquí -->
+                <!-- Los platillos agregados aparecerán aquí con opción de quitar -->
             </ul>
             <p><strong>Total: S/. <span id="total-precio">0.00</span></strong></p>
             
-            <!-- Formulario simplificado para proceder al pago -->
             <form id="formulario-pago" style="display:none;">
                 <button id="boton-pagar" type="submit">Confirmar y Pagar</button>
             </form>
